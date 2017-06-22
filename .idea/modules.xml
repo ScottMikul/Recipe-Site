@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HomeAutomationRestApi.iml" filepath="$PROJECT_DIR$/.idea/modules/HomeAutomationRestApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HomeAutomationRestApi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/HomeAutomationRestApi_main.iml" group="HomeAutomationRestApi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HomeAutomationRestApi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/HomeAutomationRestApi_test.iml" group="HomeAutomationRestApi" />
+    </modules>
+  </component>
+</project>
