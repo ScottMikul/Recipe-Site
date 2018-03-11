@@ -1,0 +1,31 @@
+<head th:fragment="head(page_title)" lang="en">
+    <head>
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width"/>
+
+        <title th:text="${page_title}"></title>
+
+        <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'/>
+        <link rel="stylesheet" href="css/unsemantic-grid-responsive.css"/>
+        <link rel="stylesheet" href="css/styles.css"/>
+
+    </head>
+</head>
+
+<header th:fragment="header">
+    <div class="container">
+        <div class="site-header">
+            <a class="logo" th:href="@{/}">InstaTeam</a>
+            <a class="new-project button icon-left" th:href="@{/newproject}"><i class="material-icons">add</i> New Project</a>
+        </div>
+    </div>
+</header>
+
+<nav th:fragment="nav(selected)">
+    <ul>
+        <li th:classappend="${selected}=='projects' ? selected : ''"><a th:href="@{/}">Projects</a></li>
+        <li th:classappend="${selected}=='collaborators' ? selected : ''"><a th:href="@{/collaborators}">Collaborators</a></li>
+        <li th:classappend="${selected}=='roles' ? selected : ''"><a th:href="@{/roles}">Roles</a></li>
+    </ul>
+</nav>

@@ -2,6 +2,7 @@ package com.teamtreehouse;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Created by scott on 6/19/2017.

@@ -21,6 +21,8 @@
     <bytecodeTargetLevel>
       <module name="HomeAutomationRestApi_main" target="1.8" />
       <module name="HomeAutomationRestApi_test" target="1.8" />
+      <module name="recipe-site_main" target="1.8" />
+      <module name="recipe-site_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
