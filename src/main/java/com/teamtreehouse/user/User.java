@@ -1,11 +1,14 @@
 package com.teamtreehouse.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teamtreehouse.UserRecipes.UserRecipesProfile;
 import com.teamtreehouse.core.BaseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 /**
  * Created by scott on 6/19/2017.
@@ -18,6 +21,8 @@ public class User extends BaseEntity {
     private String [] roles;
     @JsonIgnore
     private String password;
+    @OneToOne(cascade = CascadeType.ALL)
+    UserRecipesProfile mProfile;
 
     protected User(){
         super();
@@ -40,6 +45,14 @@ public class User extends BaseEntity {
 
     public String[] getRoles() {
         return roles;
+    }
+
+    public UserRecipesProfile getProfile() {
+        return mProfile;
+    }
+
+    public void setProfile(UserRecipesProfile profile) {
+        mProfile = profile;
     }
 
     public void setRoles(String[] roles) {

@@ -29,3 +29,9 @@
         <li th:classappend="${selected}=='roles' ? selected : ''"><a th:href="@{/roles}">Roles</a></li>
     </ul>
 </nav>
+
+<nav th:fragment="navbar(username)">
+    <a th:href="${username}==''? @{/register} : @{/index}" th:text="${username}=='' ? 'sign-up' : ${username}" text="login" ></a>
+    &bull;
+    <a th:href="${username}==''?@{/login}:@{/logout}" th:text="${username}==''?'login': 'logout'">logout</a>
+</nav>

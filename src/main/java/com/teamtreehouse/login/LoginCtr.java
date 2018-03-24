@@ -1,8 +1,12 @@
 package com.teamtreehouse.login;
 
+import com.teamtreehouse.core.BaseUserController;
 import com.teamtreehouse.index.SignInWrapper;
-import com.teamtreehouse.user.UserRepository;
+import com.teamtreehouse.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,35 +20,18 @@ import javax.validation.Valid;
  * Created by scott on 1/27/2018.
  */
 @Controller
-public class LoginCtr {
-
-    @Autowired
-    UserRepository mUserRepository;
+public class LoginCtr extends BaseUserController{
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(Model model) {
+        //get username from session.
+        String username = getSessionUsername();
+        model.addAttribute("username", username);
+
         SignInWrapper wrapper = new SignInWrapper();
         model.addAttribute("wrapper",wrapper);
         System.out.println("loginpage");
         return "login";
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String loginPage(@Valid SignInWrapper wrapper, BindingResult result, RedirectAttributes redirectAttributes){
-
-
-        String enteredPass = wrapper.getPassword();
-        System.out.println("Entered pass: "+ enteredPass);
-
-        String actualPass =  mUserRepository.findByName(wrapper.getUsername()).getPassword();
-        System.out.println("Actual pass: "+ actualPass);
-
-        if(enteredPass.contentEquals(actualPass)){
-            System.out.println("we can login now.");
-            return "index";
-        }
-
-        return "redirect:/login";
-
-    }
 }

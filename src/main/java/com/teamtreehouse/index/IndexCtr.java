@@ -1,5 +1,7 @@
 package com.teamtreehouse.index;
 
+import com.teamtreehouse.core.BaseEntity;
+import com.teamtreehouse.core.BaseUserController;
 import com.teamtreehouse.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,28 +17,20 @@ import javax.validation.Valid;
  * Created by scott on 1/27/2018.
  */
 @Controller
-public class IndexCtr {
+public class IndexCtr extends BaseUserController {
     @Autowired
     UserRepository mUserRepository;
 
     @RequestMapping("/index")
     public String loginPage(Model model) {
+        //get username from session.
+        String username = getSessionUsername();
+        model.addAttribute("username", username);
+
+
         SignInWrapper wrapper = new SignInWrapper();
         model.addAttribute("wrapper",wrapper);
-        return "index";
-    }
-
-    @RequestMapping(value = "/index", method = RequestMethod.POST)
-    public String loginPage(@Valid SignInWrapper wrapper, BindingResult result, RedirectAttributes redirectAttributes){
-
-        String enteredPass = wrapper.getPassword();
-        String actualPass =  mUserRepository.findByName(wrapper.getUsername()).getPassword();
-
-        if(enteredPass.contentEquals(actualPass)){
-            System.out.println("we can login now.");
-        }
 
         return "index";
-
     }
 }

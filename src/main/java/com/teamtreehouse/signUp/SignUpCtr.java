@@ -1,9 +1,16 @@
 package com.teamtreehouse.signUp;
 
+import com.teamtreehouse.core.BaseUserController;
 import com.teamtreehouse.user.User;
 import com.teamtreehouse.user.UserRepository;
 import com.teamtreehouse.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,12 +25,19 @@ import javax.validation.Valid;
  * Created by scott on 1/27/2018.
  */
 @Controller
-public class SignUpCtr {
+public class SignUpCtr extends BaseUserController{
     @Autowired
     UserService userService;
 
+    @Autowired
+    private AuthenticationManager mAuthenticationManager;
+
     @RequestMapping(value= "/register", method = RequestMethod.GET)
     public String SignUp(Model model){
+        //get username from session.
+        String username = getSessionUsername();
+        model.addAttribute("username", username);
+
         System.out.println("signup page");
         RegistrationWrapper wrapper = new RegistrationWrapper("","","");
         model.addAttribute("wrapper",wrapper);
@@ -45,14 +59,16 @@ public class SignUpCtr {
             System.out.println("username taken");
             return "redirect:/register";
         }
-        //complete registration with a new person guy thing majiger
+
+        //complete registration
         userService.RegisterUser(user);
 
-        //need to set up cookies and session stuff....
-        //just want to type some stuff. lol.
 
+        //TODO create session with new user on registration completion
+        //Authentication authentication = mAuthenticationManager.authenticate(new UsernamePasswordAuthenticationToken(wrapper.getUsername(),wrapper.getPassword(), AuthorityUtils.createAuthorityList(user.getRoles())));
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
+        //return "redirect:/index";
 
-        //redirect to the index upon successful creation of user
-        return "index";
+        return "redirect:/login";
     }
 }
