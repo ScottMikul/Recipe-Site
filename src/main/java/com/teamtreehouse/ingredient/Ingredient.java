@@ -2,8 +2,12 @@ package com.teamtreehouse.ingredient;
 
 import com.fasterxml.jackson.databind.deser.Deserializers;
 import com.teamtreehouse.core.BaseEntity;
+import com.teamtreehouse.recipe.Recipe;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 /**
  * Created by scott on 3/22/2018.
@@ -11,6 +15,9 @@ import javax.persistence.Entity;
 
 @Entity
 public class Ingredient extends BaseEntity{
+
+    @ManyToMany
+    List<Recipe> RecipesWithIngredient;
     String name;
     String condition;
     int quantity;
@@ -19,9 +26,17 @@ public class Ingredient extends BaseEntity{
     }
 
 
+    public List<Recipe> getRecipesWithIngredient() {
+        return RecipesWithIngredient;
+    }
+
+    public void setRecipesWithIngredient(List<Recipe> recipesWithIngredient) {
+        RecipesWithIngredient = recipesWithIngredient;
+    }
 
     public String getName() {
         return name;
+
     }
 
     public void setName(String name) {

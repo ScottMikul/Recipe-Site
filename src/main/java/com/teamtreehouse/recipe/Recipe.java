@@ -20,9 +20,9 @@ public class Recipe extends BaseEntity{
     private int prepTime;
     private int cookTime;
     private String category;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "RecipesWithIngredient",cascade = CascadeType.ALL)
     public List<Ingredient> mIngredientsList;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     public List<Instruction> instructions;
 
     public Recipe() {
