@@ -1,0 +1,50 @@
+<!doctype html >
+<html lang="en">
+<head th:replace="layout::head('sign up | My Recipes')"></head>
+
+<body>
+
+<nav th:replace="layout::navbar(${username})"></nav>
+
+  <div class="grid-container">
+
+    <div class="grid-100">
+      <a href="index.html">
+        <h1>
+          <img src="images/chefbot.svg" height="60px" />
+          <br />
+          My Recipes
+        </h1>
+      </a>
+    </div>
+
+    <form method = "post" action="/register" th:object="${wrapper}">
+
+    <div class="grid-100">
+      <div class="recipes">
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <input placeholder="Username" th:field="*{username}"> </input>
+          </p>
+        </div> <div class="clear"></div>
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <input placeholder="Password" type="password" th:field="*{password}"> </input>
+          </p>
+        </div> <div class="clear"></div>
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <input placeholder="Password Again" type="password" th:field="*{cPassword}"> </input>
+          </p>
+        </div> <div class="clear"></div>
+        <div class="prefix-20 grid-60 suffix-20">
+          <p>
+            <button action="submit">Sign-up</button>
+          </p>
+        </div> <div class="clear"></div>
+      </div> <!-- recipes -->
+    </div> <!-- grid-100 -->
+    </form>
+  </div> <!-- grid-container -->
+</body>
+</html>
