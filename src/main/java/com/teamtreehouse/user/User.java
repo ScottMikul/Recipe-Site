@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 /**
@@ -22,6 +23,7 @@ public class User extends BaseEntity {
     @JsonIgnore
     private String password;
     @OneToOne(cascade = CascadeType.ALL)
+            @JoinColumn(name="mUser")
     UserRecipesProfile mProfile;
 
     protected User(){

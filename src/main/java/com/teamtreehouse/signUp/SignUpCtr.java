@@ -48,7 +48,7 @@ public class SignUpCtr extends BaseUserController{
     public String SignUp(@Valid RegistrationWrapper wrapper, BindingResult result, RedirectAttributes redirectAttributes){
         System.out.println("signup page");
 
-        User user = new User(wrapper.getUsername(),new String [] {"user"},wrapper.getPassword());
+        User user = new User(wrapper.getUsername(),new String [] {"ROLE_USER"},wrapper.getPassword());
 
 
         if(!wrapper.getcPassword().contentEquals(wrapper.getPassword())){

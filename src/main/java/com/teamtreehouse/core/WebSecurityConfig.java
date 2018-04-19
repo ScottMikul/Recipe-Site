@@ -30,8 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //no formpage
-        /*http.authorizeRequests()
-                .antMatchers("/register**","/css/**","/images/**,/h2*").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/register**","/css/**","/images/**","/h2*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/index")
                 .permitAll()
                 .and().logout().logoutSuccessUrl("/login")
-                .permitAll();*/
+                .permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

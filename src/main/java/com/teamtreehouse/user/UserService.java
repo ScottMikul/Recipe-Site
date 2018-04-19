@@ -1,5 +1,6 @@
 package com.teamtreehouse.user;
 
+import com.teamtreehouse.UserRecipes.UserRecipesProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,13 @@ public class UserService {
     UserRepository users;
 
     public void RegisterUser(User user){
+        user.setProfile(new UserRecipesProfile());
+
         users.save(user);
     }
 
     public User findUser(User user){
         return users.findByName(user.getName());
     }
+
 }

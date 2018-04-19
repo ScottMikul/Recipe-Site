@@ -1,12 +1,11 @@
 package com.teamtreehouse.UserRecipes;
 
 import com.teamtreehouse.core.BaseEntity;
+import com.teamtreehouse.favorite.Favorite;
 import com.teamtreehouse.recipe.Recipe;
 import com.teamtreehouse.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -15,8 +14,20 @@ import java.util.List;
  */
 @Entity
 public class UserRecipesProfile extends BaseEntity {
-    @ManyToOne
+    @OneToOne(mappedBy = "mProfile")
     User mUser;
+    @OneToMany(mappedBy = "mUserRecipesProfile")
+    List<Recipe> mRecipeList;
+    @OneToMany(mappedBy= "profile")
+    List<Favorite> favorites;
+
+    public List<Favorite> getFavoriteRecipesList() {
+        return favorites;
+    }
+
+    public void setFavoriteRecipesList(List<Favorite> FavoriteRecipesList) {
+        this.favorites = FavoriteRecipesList;
+    }
 
     public User getUser() {
         return mUser;
@@ -34,9 +45,12 @@ public class UserRecipesProfile extends BaseEntity {
         mRecipeList = recipeList;
     }
 
-    @OneToMany
-    List<Recipe> mRecipeList;
+
 
     public UserRecipesProfile() {
+    }
+
+    public Boolean ownsRecipe(Recipe recipe){
+        return mRecipeList.contains(recipe);
     }
 }

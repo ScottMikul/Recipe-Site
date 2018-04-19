@@ -1,5 +1,6 @@
 package com.teamtreehouse.core;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
@@ -14,5 +15,12 @@ public  abstract class BaseUserController {
             return "";
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getUsername();
+    }
+
+    public boolean isLoggedInUSer(){
+        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof  String)
+            return false;
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"));
     }
 }

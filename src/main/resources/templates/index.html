@@ -1,72 +1,81 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="layout::head('My Recipes')"></head>
+<head th:replace="layout::head('My Recipes')">
+
+
+
+</head>
+
 
 <body>
+<script>
+
+  window.onload = function() {
+    function setCaretPosition(ctrl, pos) {
+      // Modern browsers
+      if (ctrl.setSelectionRange) {
+        ctrl.focus();
+        ctrl.setSelectionRange(pos, pos);
+
+      // IE8 and below
+      } else if (ctrl.createTextRange) {
+        var range = ctrl.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', pos);
+        range.moveStart('character', pos);
+        range.select();
+      }
+    }
+
+    //
+    var input = document.getElementById('search');
+    setCaretPosition(input, input.value.length);
+  };
+
+  function myFunction(){
+      document.getElementById("searchform").submit();
+  }
+</script>
 <nav th:replace="layout::navbar(${username})"></nav>
   <div class="grid-container">
 
-    <div class="grid-100">
-      <a href="index.html">
-        <h1>
-          <img src="images/chefbot.svg" height="60px" />
-          <br />
-          My Recipes
-        </h1>
-      </a>
-    </div>
+    <div th:replace="layout::MyRecipes"></div>
 
     <div class="grid-100">
 
       <div class="recipes">
-
         <div class="grid-100 row controls">
-          <div class="grid-30">
-            <select>
-              <option value="">All Categories</option>
-              <option value="breakfast">Breakfast</option>
-              <option value="lunch">Lunch</option>
-              <option value="dinner">Dinner</option>
-              <option value="dessert">Dessert</option>
-            </select>
-          </div>
-          <div class="grid-40">
-            <input placeholder="Search"></input>
-          </div>
+          <form id="searchform" method="post" th:action="@{/filter}" th:object="${searchform}">
+            <div class="grid-30">
+              <select onchange="myFunction()" th:field="*{category}" value="All Categories">
+                <div>
+                  <option value="All Categories" th:selected="${searchform.category}== 'All Categories'">All Categories</option>
+                  <option value="breakfast" th:selected="${searchform.category}== 'breakfast'">Breakfast</option>
+                  <option value="lunch" th:selected="${searchform.category}== 'lunch'">Lunch</option>
+                  <option value="dinner" th:selected="${searchform.category}== 'dinner'">Dinner</option>
+                  <option value="dessert" th:selected="${searchform.category}== 'dessert'">Dessert</option>
+                </div>
+              </select>
+            </div>
+            <div class="grid-40">
+              <input id = "search" th:field="*{searchstring}" placeholder="Search" onkeyup="myFunction()"></input>
+            </div>
+
+          </form>
           <div class="grid-30">
             <div class="flush-right">
-              <button>+ Add Recipe</button>
+              <a th:href="@{/add}"><button>+ Add Recipe</button></a>
             </div>
           </div>
         </div> <div class="clear"></div>
 
-        <div class="grid-100 row addHover">
-          <a href="detail.html">
+        <div th:each="recipe, item: ${allRecipes}" class="grid-100 row addHover">
+          <a th:href="@{'/detail/'+ ${recipe.id}}">
             <div class="grid-70">
-              <p>
-                <span><img src="images/favorite.svg" height="12px"/> </span>
-                Baked Alaskan Salmon with Asparagus
-              </p>
-            </div>
-          </a>
-          <div class="hoverBlock">`
-            <div class="grid-30">
-              <div class="flush-right">
-                <p>
-                  <a href="edit.html"> <img src="images/edit.svg" height="12px" /> Edit </a>
-                  <a href="#"> <img src="images/delete.svg" height="12px" /> Delete </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> <div class="clear"></div>
-
-        <div class="grid-100 row addHover">
-          <a href="detail.html">
-            <div class="grid-70">
-              <p>
-                <span><img src="images/favorited.svg" height="12px" /> </span>
-                Broiche French Toast with Nutella
+              <p >
+                <span th:if="${recipe.favorite}"><img src="images/favorited.svg" height="12px" /> </span>
+                <span th:if="${!recipe.favorite}"><img src="images/favorite.svg" height="12px" /> </span>
+                <span th:text="${recipe.name}"> Broiche French Toast with Nutella</span>
               </p>
             </div>
           </a>
@@ -74,58 +83,13 @@
             <div class="grid-30">
               <div class="flush-right">
                 <p>
-                  <a href="#"> <img src="images/edit.svg" height="12px" /> Edit </a>
-                  <a href="#"> <img src="images/delete.svg" height="12px" /> Delete </a>
+                  <a th:if="${recipe.owner}" th:href="@{'/edit/'+${recipe.id}}"> <img src="images/edit.svg" height="12px" /> Edit </a>
+                  <a th:if="${recipe.owner}" th:href="@{'/delete/'+${recipe.id}}"> <img src="images/delete.svg" height="12px" /> Delete </a>
                 </p>
               </div>
             </div>
           </div>
         </div> <div class="clear"></div>
-
-        <div class="grid-100 row addHover">
-          <a href="detail.html">
-            <div class="grid-70">
-              <p>
-                <span><img src="images/favorite.svg" height="12px" /> </span>
-                Simple Miso Soup with Clams and Sake
-              </p>
-            </div>
-          </a>
-          <div class="hoverBlock">
-            <div class="grid-30">
-              <div class="flush-right">
-                <p>
-                  <a href="#"> <img src="images/edit.svg" height="12px" /> Edit </a>
-                  <a href="#"> <img src="images/delete.svg" height="12px" /> Delete </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> <div class="clear"></div>
-
-        <div class="grid-100 row addHover">
-          <a href="detail.html">
-            <div class="grid-70">
-              <p>
-                <span><img src="images/favorite.svg" height="12px" /> </span>
-                Paleo Squash Noodles with Chicken Breast
-              </p>
-            </div>
-          </a>
-          <div class="hoverBlock">
-            <div class="grid-30">
-              <div class="flush-right">
-                <p>
-                  <a href="#"> <img src="images/edit.svg" height="12px" /> Edit </a>
-                  <a href="#"> <img src="images/delete.svg" height="12px" /> Delete </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> <div class="clear"></div>
-
-        <div class="row">&nbsp;</div>
-
       </div> <!-- recipes -->
     </div> <!-- grid-100 -->
   </div> <!-- grid-container -->

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="layout::head('Name_Placeholder | My Recipes')"></head>
+<head th:replace="layout::head(${username}+' | My Recipes')"></head>
 
 <body>
 
@@ -8,15 +8,7 @@
 
   <div class="grid-container">
 
-    <div class="grid-100">
-      <a href="index.html">
-        <h1>
-          <img src="images/chefbot.svg" height="60px">
-          <br>
-          My Recipes
-        </h1>
-      </a>
-    </div>
+    <div th:replace="layout::MyRecipes"></div>
 
     <div class="grid-100">
 
@@ -24,16 +16,17 @@
 
         <div class="grid-100 row controls">
           <div class="grid-100">
-            <h2> Chandra S. </h2>
+            <h2 th:text = "${username}"> Username </h2>
           </div>
         </div> <div class="clear"></div>
 
-        <div class="grid-100 row addHover">
-          <a href="detail.html">
+        <div th:each="recipe, item: ${allRecipes}" class="grid-100 row addHover">
+          <a th:href="@{'/detail/'+ ${recipe.id}}">
             <div class="grid-70">
               <p>
-                <span><img src="images/favorited.svg" height="12px"> </span>
-                Broiche French Toast with Nutella
+                <span th:if="${recipe.favorite}"><img src="images/favorited.svg" height="12px" /> </span>
+                <span th:if="${!recipe.favorite}"><img src="images/favorite.svg" height="12px" /> </span>
+                <span th:text="${recipe.name}"> name</span>
               </p>
             </div>
           </a>
@@ -41,29 +34,8 @@
             <div class="grid-30">
               <div class="flush-right">
                 <p>
-                  <a href="#"> <img src="images/edit.svg" height="12px"> Edit </a>
-                  <a href="#"> <img src="images/delete.svg" height="12px"> Delete </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> <div class="clear"></div>
-
-        <div class="grid-100 row addHover">
-          <a href="detail.html">
-            <div class="grid-70">
-              <p>
-                <span><img src="images/favorited.svg" height="12px"> </span>
-                Meyer Lemon French Toast
-              </p>
-            </div>
-          </a>
-          <div class="hoverBlock">
-            <div class="grid-30">
-              <div class="flush-right">
-                <p>
-                  <a href="#"> <img src="images/edit.svg" height="12px"> Edit </a>
-                  <a href="#"> <img src="images/delete.svg" height="12px"> Delete </a>
+                  <a th:if="${recipe.owner}" th:href="@{'/edit/'+${recipe.id}}"> <img src="images/edit.svg" height="12px" /> Edit </a>
+                  <a th:if="${recipe.owner}" th:href="@{'/delete/'+${recipe.id}}"> <img src="images/delete.svg" height="12px" /> Delete </a>
                 </p>
               </div>
             </div>
