@@ -58,10 +58,11 @@ public class DataBuilder implements ApplicationRunner {
 
         User user = new User("scotty",new String[]{"ROLE_USER"} , "");
         User user2 = new User("bob",new String[]{"ROLE_USER","ROLE_ADMIN"} , "password");
+        UserRecipesProfile profile2 = new UserRecipesProfile();
+        user2.setProfile(profile2);
         UserRecipesProfile profile = new UserRecipesProfile();
         user.setProfile(profile);
         users.save(user2);
-
         users.save(user);
 
         profile.setRecipeList(new ArrayList<>());
