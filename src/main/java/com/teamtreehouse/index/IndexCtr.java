@@ -15,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sun.java2d.cmm.Profile;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -37,6 +36,12 @@ public class IndexCtr extends BaseUserController {
 
     @Autowired
     RecipeRepository recipeRepository;
+
+    @RequestMapping("/")
+    public String redirectToIndex(){
+        return "redirect:/index";
+    }
+
     @RequestMapping("/index")
     public String loginPage(Model model, RedirectAttributes redirectAttributes) {
 
